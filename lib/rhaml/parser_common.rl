@@ -2,18 +2,27 @@
   machine rhaml_common;
 
   nl = [\n];
-  rwp = (space -- nl)+ ;
-  nowp = any - space;
-  nonl = any - nl;
+  wp = space -- nl;
+  rwp = wp+ ;
+  nowp = ^space;
+  nonl = ^nl;
 
-  header_type = rwp nowp>start_header_type nonl* %finish_header_type;
+  tabi = [\t] $tab_indent;
+  spi = " " $space_indent;
+  indent = tabi | spi;
 
-  header =
-    "!!!" >new_header
-    header_type?
-    ;
+  header = "!!!" >new_header ;
 
-  haml = header;
+  tag_name = (alnum | [:-_])+ ;
 
-  main := haml;
+  tag = "%" tag_name >start_tag %/finish_tag %finish_tag ;
+
+  element = header | tag;
+
+  inline_text = nonl+>start_inline_text %/finish_inline_text %finish_inline_text ;
+
+  line =
+    indent* element wp* <: inline_text? nl ;
+
+  main := line*;
 }%%
