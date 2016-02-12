@@ -23,6 +23,22 @@
 
   action finish_attr_val { @callbacks[:on_finish_attr_val].call(data, fpc) }
 
+  action start_filter { @callbacks[:on_start_filter].call(data, fpc) }
+
+  action finish_filter { @callbacks[:on_finish_filter].call(data, fpc) }
+
+  action start_text { @callbacks[:on_start_text].call(data, fpc) }
+
+  action finish_text { @callbacks[:on_finish_text].call(data, fpc) }
+
+  action start_class { @callbacks[:on_start_class].call(data, fpc) }
+
+  action finish_class { @callbacks[:on_finish_class].call(data, fpc == eof ? fpc : fpc-1) }
+
+  action start_id { @callbacks[:on_start_id].call(data, fpc) }
+
+  action finish_id { @callbacks[:on_finish_id].call(data, fpc == eof ? fpc : fpc-1) }
+
   include rhaml_common "parser_common.rl";
 }%%
 

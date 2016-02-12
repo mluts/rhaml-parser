@@ -42,6 +42,38 @@ class ParserTest < Minitest::Test
         @output.last[2] = input[@output.last[2]..p]
       },
 
+      on_start_filter: proc { |input, p|
+        @output << [:filter, p]
+      },
+
+      on_finish_filter: proc { |input, p|
+        @output.last[1] = input[@output.last[1]..p]
+      },
+
+      on_start_text: proc { |input, p|
+        @output << [:text, p]
+      },
+
+      on_finish_text: proc { |input, p|
+        @output.last[1] = input[@output.last[1]..p]
+      },
+
+      on_start_class: proc { |input, p|
+        @output << [:class, p]
+      },
+
+      on_finish_class: proc { |input, p|
+        @output.last[1] = input[@output.last[1]..p]
+      },
+
+      on_start_id: proc { |input, p|
+        @output << [:id, p]
+      },
+
+      on_finish_id: proc { |input, p|
+        @output.last[1] = input[@output.last[1]..p]
+      },
+
       on_tab_indent: proc { @output << [:tab] },
 
       on_space_indent: proc { @output << [:space] }
@@ -77,7 +109,12 @@ class ParserTest < Minitest::Test
                                            [:attr, "e", "f"],
                                            [:attr, "d", "z"]],
     "%a{ :a => 'b'}" => [[:tag, "a"], [:attr, "a", "'b'"]],
-    "%a{ a: 'b'}" => [[:tag, "a"], [:attr, "a", "'b'"]]
+    "%a{ a: 'b'}" => [[:tag, "a"], [:attr, "a", "'b'"]],
+    ":css" => [[:filter, 'css']],
+    "asdasd" => [[:text, "asdasd"]],
+    ".the-class:" => [[:class, "the-class:"]],
+    ".the-class: some-text" => [[:class, "the-class:"], [:inline_text, "some-text"]],
+    "%a.b.c#d#e" => [[:tag, "a"], [:class, "b"], [:class, "c"], [:id, "d"], [:id, "e"]]
 
 
   }.each do |example, result|

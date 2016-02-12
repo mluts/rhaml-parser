@@ -24,7 +24,9 @@
 
   quoted = squoted | dquoted;
 
-  attr_val = name | quoted;
+  var = (alpha | "_" | "$") (alnum | "_" | "$")*;
+
+  attr_val = var | quoted;
 
   action call_html_attrs { fcall html_attrs; }
   action call_ruby_attrs { fcall ruby_attrs; }
@@ -43,7 +45,7 @@
 
   html_attrs := html_attr (space+ html_attr)* space* ")" $ret;
 
-  ruby_var_name = (alpha | "_" | "$") (alnum | "_" | "$")*;
+  ruby_var_name = var;
 
   ruby_attr_name = 
     (":" ruby_var_name >start_attr_name %finish_attr_name space* "=>") |
@@ -60,19 +62,37 @@
 
   attrs = "(" $call_html_attrs | "{" $call_ruby_attrs ;
 
+  class =
+    "." tag_name
+      >start_class
+      %/finish_class
+      %finish_class ;
+
+  id =
+    "#" tag_name >start_id %/finish_id %finish_id;
+
+  div =
+    class | id;
+
   tag =
     "%" tag_name >start_tag
                  %/finish_tag
                  %finish_tag
+    (div)*
     attrs?
     ;
 
-  element = header | tag;
+  filter =
+    ":" alnum+ >start_filter %/finish_filter %finish_filter ;
 
-  inline_text = nonl+>start_inline_text %/finish_inline_text %finish_inline_text ;
+  element = header | tag | div | filter;
+
+  inline_text = wp nonl+>start_inline_text %/finish_inline_text %finish_inline_text ;
+
+  text = ^(space | ":" | "!" | "%" | "." | "#" ) >start_text nonl+ %/finish_text %finish_text;
 
   line =
-    indent* element wp* <: inline_text? nl ;
+    indent* ((element inline_text?) | text) nl ;
 
   main := line*;
 }%%
