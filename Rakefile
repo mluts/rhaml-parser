@@ -1,5 +1,6 @@
 require 'rake/clean'
 require 'rake/testtask'
+require 'bundler/gem_tasks'
 
 RAGEL = 'ragel -R'
 CLEAN << FileList['lib/rhaml/parser.rb', 'parser.dot', 'parser.png']
