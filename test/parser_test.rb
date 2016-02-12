@@ -26,12 +26,28 @@ class ParserTest < Minitest::Test
         @output.last[1] = input[@output.last[1]..p]
       },
 
+      on_start_attr_name: proc { |input, p|
+        @output << [:attr, p]
+      },
+
+      on_finish_attr_name: proc { |input, p|
+        @output.last[1] = input[@output.last[1]..p]
+      },
+
+      on_start_attr_val: proc { |input, p|
+        @output.last[2] = p
+      },
+
+      on_finish_attr_val: proc { |input, p|
+        @output.last[2] = input[@output.last[2]..p]
+      },
+
       on_tab_indent: proc { @output << [:tab] },
 
       on_space_indent: proc { @output << [:space] }
 
     }.inject({}) do |acc, (k, v)|
-      acc[k] = proc { |*args| puts k.inspect if $-d; v.call(*args) }
+      acc[k] = proc { |*args| puts k.inspect + " " + args[0][args[1]].inspect if $-d; v.call(*args) }
       acc
     end
 
@@ -52,6 +68,17 @@ class ParserTest < Minitest::Test
     "%a\n\t\t\t%b" => [[:tag, "a"], [:tab], [:tab], [:tab], [:tag, "b"]],
     "%a " => [[:tag, "a"]],
     "%a hello world" => [[:tag, "a"], [:inline_text, "hello world"]],
+    "%a(a=b)" => [[:tag, "a"], [:attr, "a", "b"]],
+    "%a(  a = b )" => [[:tag, "a"], [:attr, "a", "b"]],
+    "%a(a=b)\n%b(c=d e= f d \n\r = z)" => [[:tag, "a"],
+                                           [:attr, "a", "b"],
+                                           [:tag, "b"],
+                                           [:attr, "c", "d"],
+                                           [:attr, "e", "f"],
+                                           [:attr, "d", "z"]],
+    "%a{ :a => 'b'}" => [[:tag, "a"], [:attr, "a", "'b'"]],
+    "%a{ a: 'b'}" => [[:tag, "a"], [:attr, "a", "'b'"]]
+
 
   }.each do |example, result|
       define_method("test_spec: #{example.inspect} should generate #{result.inspect}") do

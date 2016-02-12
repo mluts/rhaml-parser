@@ -15,6 +15,14 @@
 
   action space_indent { @callbacks[:on_space_indent].call(data, fpc) }
 
+  action start_attr_name { @callbacks[:on_start_attr_name].call(data, fpc) }
+
+  action finish_attr_name { @callbacks[:on_finish_attr_name].call(data, fpc-1) }
+
+  action start_attr_val { @callbacks[:on_start_attr_val].call(data, fpc) }
+
+  action finish_attr_val { @callbacks[:on_finish_attr_val].call(data, fpc) }
+
   include rhaml_common "parser_common.rl";
 }%%
 

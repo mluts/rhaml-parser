@@ -25,7 +25,9 @@ end
 task compile: %w(lib/rhaml/parser.rb)
 
 task draw: %w(parser.png) do |t|
-  exec "feh #{t.prerequisites.first}"
+  fork do
+    exec "feh #{t.prerequisites.first}"
+  end
 end
 
 task default: [:compile, :test]
