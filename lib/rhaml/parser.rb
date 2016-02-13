@@ -1,7 +1,7 @@
 
 # line 1 "lib/rhaml/parser.rl"
 
-# line 43 "lib/rhaml/parser.rl"
+# line 51 "lib/rhaml/parser.rl"
 
 
 module RHaml
@@ -14,12 +14,8 @@ module RHaml
       end
     end
 
-    def initialize(callbacks)
-      @callbacks = Hash.new do |h,k|
-        h[k] = proc{ puts "Warning! No callback for #{k.inspect}" }
-      end
-
-      @callbacks.merge!(callbacks)
+    def initialize(callable)
+      @callable = callable
     end
 
     def parse(input)
@@ -32,7 +28,7 @@ module RHaml
       eof = pe
 
       
-# line 36 "lib/rhaml/parser.rb"
+# line 32 "lib/rhaml/parser.rb"
 class << self
 	attr_accessor :_rhaml_parser_actions
 	private :_rhaml_parser_actions, :_rhaml_parser_actions=
@@ -43,10 +39,11 @@ self._rhaml_parser_actions = [
 	7, 1, 8, 1, 9, 1, 10, 1, 
 	11, 1, 12, 1, 13, 1, 14, 1, 
 	15, 1, 16, 1, 17, 1, 18, 1, 
-	21, 2, 2, 19, 2, 2, 20, 2, 
-	8, 9, 2, 9, 10, 2, 16, 19, 
-	2, 16, 20, 2, 18, 19, 2, 18, 
-	20, 3, 8, 9, 10
+	19, 1, 20, 1, 21, 1, 22, 1, 
+	25, 2, 2, 23, 2, 2, 24, 2, 
+	8, 9, 2, 9, 10, 2, 16, 23, 
+	2, 16, 24, 2, 18, 23, 2, 18, 
+	24, 3, 8, 9, 10
 ]
 
 class << self
@@ -161,30 +158,30 @@ self._rhaml_parser_indicies = [
 	22, 22, 22, 22, 22, 1, 24, 23, 
 	25, 26, 27, 28, 27, 29, 23, 27, 
 	27, 27, 1, 30, 30, 30, 30, 30, 
-	1, 20, 19, 31, 32, 33, 34, 33, 
-	35, 19, 33, 33, 33, 1, 36, 36, 
-	36, 36, 36, 1, 38, 37, 39, 40, 
-	41, 42, 41, 43, 37, 41, 41, 41, 
-	1, 44, 44, 44, 44, 44, 1, 38, 
-	37, 45, 45, 37, 45, 45, 45, 1, 
-	46, 46, 46, 1, 48, 47, 47, 49, 
-	49, 49, 1, 50, 51, 51, 50, 51, 
-	51, 51, 1, 52, 53, 54, 53, 52, 
-	53, 53, 53, 1, 55, 56, 55, 1, 
-	56, 57, 58, 59, 58, 56, 58, 58, 
-	1, 61, 60, 62, 63, 62, 1, 62, 
-	63, 51, 51, 62, 51, 51, 51, 1, 
-	62, 64, 63, 64, 62, 64, 64, 64, 
-	1, 61, 65, 66, 67, 68, 69, 70, 
-	68, 66, 68, 68, 1, 72, 71, 73, 
-	74, 75, 76, 75, 73, 75, 75, 1, 
-	77, 78, 79, 80, 79, 77, 79, 79, 
-	1, 82, 81, 83, 66, 84, 83, 1, 
-	83, 85, 66, 85, 84, 83, 85, 85, 
-	85, 1, 82, 86, 87, 73, 87, 87, 
-	87, 87, 1, 72, 88, 89, 89, 89, 
-	89, 1, 90, 91, 92, 91, 90, 91, 
-	91, 91, 1, 93, 94, 93, 1, 77, 
+	1, 32, 31, 33, 34, 35, 36, 35, 
+	37, 31, 35, 35, 35, 1, 38, 38, 
+	38, 38, 38, 1, 40, 39, 41, 42, 
+	43, 44, 43, 45, 39, 43, 43, 43, 
+	1, 46, 46, 46, 46, 46, 1, 48, 
+	47, 49, 49, 47, 49, 49, 49, 1, 
+	50, 50, 50, 1, 52, 51, 51, 53, 
+	53, 53, 1, 54, 55, 55, 54, 55, 
+	55, 55, 1, 56, 57, 58, 57, 56, 
+	57, 57, 57, 1, 59, 60, 59, 1, 
+	60, 61, 62, 63, 62, 60, 62, 62, 
+	1, 65, 64, 66, 67, 66, 1, 66, 
+	67, 55, 55, 66, 55, 55, 55, 1, 
+	66, 68, 67, 68, 66, 68, 68, 68, 
+	1, 65, 69, 70, 71, 72, 73, 74, 
+	72, 70, 72, 72, 1, 76, 75, 77, 
+	78, 79, 80, 79, 77, 79, 79, 1, 
+	81, 82, 83, 84, 83, 81, 83, 83, 
+	1, 86, 85, 87, 70, 88, 87, 1, 
+	87, 89, 70, 89, 88, 87, 89, 89, 
+	89, 1, 86, 90, 91, 77, 91, 91, 
+	91, 91, 1, 76, 92, 93, 93, 93, 
+	93, 1, 94, 95, 96, 95, 94, 95, 
+	95, 95, 1, 97, 98, 97, 1, 81, 
 	1, 4, 5, 6, 7, 8, 9, 10, 
 	1, 3, 1, 1, 0
 ]
@@ -197,15 +194,16 @@ self._rhaml_parser_trans_targs = [
 	2, 0, 44, 1, 3, 3, 4, 9, 
 	11, 17, 19, 5, 6, 7, 44, 8, 
 	8, 44, 10, 7, 44, 10, 12, 7, 
-	44, 13, 6, 12, 15, 6, 14, 13, 
-	6, 14, 15, 6, 16, 7, 44, 13, 
-	6, 16, 15, 6, 18, 18, 20, 7, 
-	44, 20, 21, 22, 23, 22, 24, 23, 
-	24, 25, 28, 29, 25, 26, 27, 45, 
-	28, 29, 30, 31, 38, 39, 40, 31, 
-	32, 33, 34, 36, 37, 33, 34, 36, 
-	37, 34, 35, 35, 46, 36, 37, 38, 
-	39, 41, 42, 41, 43, 42, 43
+	44, 13, 6, 12, 15, 6, 14, 7, 
+	44, 13, 6, 14, 15, 6, 16, 7, 
+	44, 13, 6, 16, 15, 6, 18, 7, 
+	44, 18, 20, 7, 44, 20, 21, 22, 
+	23, 22, 24, 23, 24, 25, 28, 29, 
+	25, 26, 27, 45, 28, 29, 30, 31, 
+	38, 39, 40, 31, 32, 33, 34, 36, 
+	37, 33, 34, 36, 37, 34, 35, 35, 
+	46, 36, 37, 38, 39, 41, 42, 41, 
+	43, 42, 43
 ]
 
 class << self
@@ -215,16 +213,17 @@ end
 self._rhaml_parser_trans_actions = [
 	0, 0, 29, 27, 11, 13, 1, 0, 
 	0, 0, 0, 0, 0, 0, 0, 7, 
-	0, 9, 35, 37, 37, 0, 3, 5, 
-	5, 5, 41, 0, 5, 44, 35, 37, 
-	59, 0, 37, 62, 31, 33, 33, 33, 
-	53, 0, 33, 56, 31, 0, 23, 25, 
-	25, 0, 0, 15, 17, 0, 17, 0, 
-	0, 19, 50, 19, 0, 21, 0, 39, 
-	21, 0, 0, 15, 15, 15, 0, 0, 
-	0, 17, 47, 65, 47, 0, 19, 50, 
-	19, 0, 21, 0, 39, 21, 0, 0, 
-	0, 15, 17, 0, 17, 0, 0
+	0, 9, 43, 45, 45, 0, 3, 5, 
+	5, 5, 49, 0, 5, 52, 35, 37, 
+	37, 37, 67, 0, 37, 70, 31, 33, 
+	33, 33, 61, 0, 33, 64, 39, 41, 
+	41, 0, 23, 25, 25, 0, 0, 15, 
+	17, 0, 17, 0, 0, 19, 58, 19, 
+	0, 21, 0, 47, 21, 0, 0, 15, 
+	15, 15, 0, 0, 0, 17, 55, 73, 
+	55, 0, 19, 58, 19, 0, 21, 0, 
+	47, 21, 0, 0, 0, 15, 17, 0, 
+	17, 0, 0
 ]
 
 class << self
@@ -233,8 +232,8 @@ class << self
 end
 self._rhaml_parser_eof_actions = [
 	0, 0, 29, 0, 0, 0, 0, 0, 
-	9, 0, 37, 0, 5, 0, 37, 0, 
-	33, 0, 33, 0, 25, 0, 0, 0, 
+	9, 0, 45, 0, 5, 0, 37, 0, 
+	33, 0, 41, 0, 25, 0, 0, 0, 
 	0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 0, 0
@@ -267,7 +266,7 @@ end
 self.rhaml_parser_en_main = 44;
 
 
-# line 271 "lib/rhaml/parser.rb"
+# line 270 "lib/rhaml/parser.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -275,7 +274,7 @@ begin
 	top = 0
 end
 
-# line 279 "lib/rhaml/parser.rb"
+# line 278 "lib/rhaml/parser.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -359,80 +358,96 @@ begin
 when 0 then
 # line 4 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_new_header].call(data, p) 		end
+ __call(:on_new_header, data, p) 		end
 when 1 then
 # line 6 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_tag].call(data, p) 		end
+ __call(:on_start_tag, data, p) 		end
 when 2 then
 # line 8 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_tag].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_tag, data, p == eof ? p : p-1) 		end
 when 3 then
 # line 10 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_inline_text].call(data, p) 		end
+ __call(:on_start_inline_text, data, p) 		end
 when 4 then
 # line 12 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_inline_text].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_inline_text, data, p == eof ? p : p-1) 		end
 when 5 then
 # line 14 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_tab_indent].call(data, p) 		end
+ __call(:on_tab_indent, data, p) 		end
 when 6 then
 # line 16 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_space_indent].call(data, p) 		end
+ __call(:on_space_indent, data, p) 		end
 when 7 then
 # line 18 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_attr_name].call(data, p) 		end
+ __call(:on_start_attr_name, data, p) 		end
 when 8 then
 # line 20 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_attr_name].call(data, p-1) 		end
+ __call(:on_finish_attr_name, data, p-1) 		end
 when 9 then
 # line 22 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_attr_val].call(data, p) 		end
+ __call(:on_start_attr_val, data, p) 		end
 when 10 then
 # line 24 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_attr_val].call(data, p) 		end
+ __call(:on_finish_attr_val, data, p) 		end
 when 11 then
 # line 26 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_filter].call(data, p) 		end
+ __call(:on_start_filter, data, p) 		end
 when 12 then
 # line 28 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_filter].call(data, p) 		end
+ __call(:on_finish_filter, data, p) 		end
 when 13 then
 # line 30 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_text].call(data, p) 		end
+ __call(:on_start_text, data, p) 		end
 when 14 then
 # line 32 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_text].call(data, p) 		end
+ __call(:on_finish_text, data, p) 		end
 when 15 then
 # line 34 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_class].call(data, p) 		end
+ __call(:on_start_class, data, p) 		end
 when 16 then
 # line 36 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_class].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_class, data, p == eof ? p : p-1) 		end
 when 17 then
 # line 38 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_start_id].call(data, p) 		end
+ __call(:on_start_id, data, p) 		end
 when 18 then
 # line 40 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_id].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_id, data, p == eof ? p : p-1) 		end
 when 19 then
+# line 42 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_start_class_div, data, p) 		end
+when 20 then
+# line 44 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_finish_class_div, data, p == eof ? p : p-1) 		end
+when 21 then
+# line 46 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_start_id_div, data, p) 		end
+when 22 then
+# line 48 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_finish_id_div, data, p == eof ? p : p-1) 		end
+when 23 then
 # line 31 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -444,7 +459,7 @@ when 19 then
 		break
 	end
  		end
-when 20 then
+when 24 then
 # line 32 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -456,7 +471,7 @@ when 20 then
 		break
 	end
  		end
-when 21 then
+when 25 then
 # line 33 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -467,7 +482,7 @@ when 21 then
 		break
 	end
  		end
-# line 471 "lib/rhaml/parser.rb"
+# line 486 "lib/rhaml/parser.rb"
 			end # action switch
 		end
 	end
@@ -498,28 +513,36 @@ when 21 then
 when 2 then
 # line 8 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_tag].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_tag, data, p == eof ? p : p-1) 		end
 when 4 then
 # line 12 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_inline_text].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_inline_text, data, p == eof ? p : p-1) 		end
 when 12 then
 # line 28 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_filter].call(data, p) 		end
+ __call(:on_finish_filter, data, p) 		end
 when 14 then
 # line 32 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_text].call(data, p) 		end
+ __call(:on_finish_text, data, p) 		end
 when 16 then
 # line 36 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_class].call(data, p == eof ? p : p-1) 		end
+ __call(:on_finish_class, data, p == eof ? p : p-1) 		end
 when 18 then
 # line 40 "lib/rhaml/parser.rl"
 		begin
- @callbacks[:on_finish_id].call(data, p == eof ? p : p-1) 		end
-# line 523 "lib/rhaml/parser.rb"
+ __call(:on_finish_id, data, p == eof ? p : p-1) 		end
+when 20 then
+# line 44 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_finish_class_div, data, p == eof ? p : p-1) 		end
+when 22 then
+# line 48 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_finish_id_div, data, p == eof ? p : p-1) 		end
+# line 546 "lib/rhaml/parser.rb"
 		end # eof action switch
 	end
 	if _trigger_goto
@@ -533,7 +556,7 @@ end
 	end
 	end
 
-# line 76 "lib/rhaml/parser.rl"
+# line 80 "lib/rhaml/parser.rl"
 
       
       if cs == rhaml_parser_error
@@ -545,6 +568,14 @@ end
       nil
     rescue => ex
       raise self.class::Error.new(input, p, "#{ex.class}: #{ex.message}")
+    end
+
+    def __call(mtd, input, p)
+      if @callable.respond_to?(mtd)
+        @callable.send(mtd, input, p)
+      else
+        warn "No callback for #{mtd.inspect}"
+      end
     end
   end
 end

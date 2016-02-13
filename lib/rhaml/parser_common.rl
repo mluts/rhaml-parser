@@ -71,14 +71,27 @@
   id =
     "#" tag_name >start_id %/finish_id %finish_id;
 
+  class_or_id = class | id;
+
+  class_div =
+    "." tag_name
+      >start_class_div
+      %/finish_class_div
+      %finish_class_div ;
+
+  id_div = 
+    "#" tag_name >start_id_div
+                %/finish_id_div
+                %finish_id_div;
+
   div =
-    class | id;
+    class_div | id_div;
 
   tag =
     "%" tag_name >start_tag
                  %/finish_tag
                  %finish_tag
-    (div)*
+    (class_or_id)*
     attrs?
     ;
 

@@ -1,43 +1,51 @@
 %%{
   machine rhaml_parser;
 
-  action new_header { @callbacks[:on_new_header].call(data, fpc) }
+  action new_header { __call(:on_new_header, data, fpc) }
 
-  action start_tag { @callbacks[:on_start_tag].call(data, fpc) }
+  action start_tag { __call(:on_start_tag, data, fpc) }
 
-  action finish_tag { @callbacks[:on_finish_tag].call(data, fpc == eof ? fpc : fpc-1) }
+  action finish_tag { __call(:on_finish_tag, data, fpc == eof ? fpc : fpc-1) }
 
-  action start_inline_text { @callbacks[:on_start_inline_text].call(data, fpc) }
+  action start_inline_text { __call(:on_start_inline_text, data, fpc) }
 
-  action finish_inline_text { @callbacks[:on_finish_inline_text].call(data, fpc == eof ? fpc : fpc-1) }
+  action finish_inline_text { __call(:on_finish_inline_text, data, fpc == eof ? fpc : fpc-1) }
 
-  action tab_indent { @callbacks[:on_tab_indent].call(data, fpc) }
+  action tab_indent { __call(:on_tab_indent, data, fpc) }
 
-  action space_indent { @callbacks[:on_space_indent].call(data, fpc) }
+  action space_indent { __call(:on_space_indent, data, fpc) }
 
-  action start_attr_name { @callbacks[:on_start_attr_name].call(data, fpc) }
+  action start_attr_name { __call(:on_start_attr_name, data, fpc) }
 
-  action finish_attr_name { @callbacks[:on_finish_attr_name].call(data, fpc-1) }
+  action finish_attr_name { __call(:on_finish_attr_name, data, fpc-1) }
 
-  action start_attr_val { @callbacks[:on_start_attr_val].call(data, fpc) }
+  action start_attr_val { __call(:on_start_attr_val, data, fpc) }
 
-  action finish_attr_val { @callbacks[:on_finish_attr_val].call(data, fpc) }
+  action finish_attr_val { __call(:on_finish_attr_val, data, fpc) }
 
-  action start_filter { @callbacks[:on_start_filter].call(data, fpc) }
+  action start_filter { __call(:on_start_filter, data, fpc) }
 
-  action finish_filter { @callbacks[:on_finish_filter].call(data, fpc) }
+  action finish_filter { __call(:on_finish_filter, data, fpc) }
 
-  action start_text { @callbacks[:on_start_text].call(data, fpc) }
+  action start_text { __call(:on_start_text, data, fpc) }
 
-  action finish_text { @callbacks[:on_finish_text].call(data, fpc) }
+  action finish_text { __call(:on_finish_text, data, fpc) }
 
-  action start_class { @callbacks[:on_start_class].call(data, fpc) }
+  action start_class { __call(:on_start_class, data, fpc) }
 
-  action finish_class { @callbacks[:on_finish_class].call(data, fpc == eof ? fpc : fpc-1) }
+  action finish_class { __call(:on_finish_class, data, fpc == eof ? fpc : fpc-1) }
 
-  action start_id { @callbacks[:on_start_id].call(data, fpc) }
+  action start_id { __call(:on_start_id, data, fpc) }
 
-  action finish_id { @callbacks[:on_finish_id].call(data, fpc == eof ? fpc : fpc-1) }
+  action finish_id { __call(:on_finish_id, data, fpc == eof ? fpc : fpc-1) }
+
+  action start_class_div { __call(:on_start_class_div, data, fpc) }
+
+  action finish_class_div { __call(:on_finish_class_div, data, fpc == eof ? fpc : fpc-1) }
+
+  action start_id_div { __call(:on_start_id_div, data, fpc) }
+
+  action finish_id_div { __call(:on_finish_id_div, data, fpc == eof ? fpc : fpc-1) }
 
   include rhaml_common "parser_common.rl";
 }%%
@@ -52,12 +60,8 @@ module RHaml
       end
     end
 
-    def initialize(callbacks)
-      @callbacks = Hash.new do |h,k|
-        h[k] = proc{ puts "Warning! No callback for #{k.inspect}" }
-      end
-
-      @callbacks.merge!(callbacks)
+    def initialize(callable)
+      @callable = callable
     end
 
     def parse(input)
@@ -84,6 +88,14 @@ module RHaml
       nil
     rescue => ex
       raise self.class::Error.new(input, p, "#{ex.class}: #{ex.message}")
+    end
+
+    def __call(mtd, input, p)
+      if @callable.respond_to?(mtd)
+        @callable.send(mtd, input, p)
+      else
+        warn "No callback for #{mtd.inspect}"
+      end
     end
   end
 end
