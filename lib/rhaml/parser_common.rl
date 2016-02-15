@@ -104,7 +104,7 @@
 
   element = ((header | tag | div | filter) inline_text?) | text ;
 
-  line = indent* element nl ;
+  line = indent* element nl>newline ;
 
   main := line*;
 }%%

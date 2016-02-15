@@ -1,7 +1,7 @@
 
 # line 1 "lib/rhaml/parser.rl"
 
-# line 51 "lib/rhaml/parser.rl"
+# line 53 "lib/rhaml/parser.rl"
 
 
 module RHaml
@@ -40,12 +40,15 @@ self._rhaml_parser_actions = [
 	11, 1, 12, 1, 13, 1, 14, 1, 
 	15, 1, 16, 1, 17, 1, 18, 1, 
 	19, 1, 20, 1, 21, 1, 22, 1, 
-	25, 2, 2, 23, 2, 2, 24, 2, 
-	8, 9, 2, 9, 10, 2, 16, 23, 
-	2, 16, 24, 2, 18, 23, 2, 18, 
-	24, 2, 20, 23, 2, 20, 24, 2, 
-	22, 23, 2, 22, 24, 3, 8, 9, 
-	10
+	23, 1, 26, 2, 2, 23, 2, 2, 
+	24, 2, 2, 25, 2, 4, 23, 2, 
+	8, 9, 2, 9, 10, 2, 12, 23, 
+	2, 14, 23, 2, 16, 23, 2, 16, 
+	24, 2, 16, 25, 2, 18, 23, 2, 
+	18, 24, 2, 18, 25, 2, 20, 23, 
+	2, 20, 24, 2, 20, 25, 2, 22, 
+	23, 2, 22, 24, 2, 22, 25, 3, 
+	8, 9, 10
 ]
 
 class << self
@@ -215,19 +218,19 @@ class << self
 	private :_rhaml_parser_trans_actions, :_rhaml_parser_trans_actions=
 end
 self._rhaml_parser_trans_actions = [
-	0, 0, 29, 27, 11, 13, 1, 0, 
-	0, 0, 0, 0, 0, 0, 0, 7, 
-	0, 9, 43, 45, 45, 45, 79, 0, 
-	45, 82, 35, 37, 37, 37, 67, 0, 
-	37, 70, 31, 33, 33, 33, 61, 0, 
-	33, 64, 3, 5, 5, 5, 49, 0, 
-	5, 52, 39, 41, 41, 41, 73, 0, 
-	41, 76, 23, 25, 25, 0, 0, 15, 
-	17, 0, 17, 0, 0, 19, 58, 19, 
-	0, 21, 0, 47, 21, 0, 0, 15, 
-	15, 15, 0, 0, 0, 17, 55, 85, 
-	55, 0, 19, 58, 19, 0, 21, 0, 
-	47, 21, 0, 0, 0, 15, 17, 0, 
+	0, 0, 72, 27, 11, 13, 1, 0, 
+	0, 0, 0, 0, 0, 0, 47, 7, 
+	0, 60, 43, 45, 102, 45, 105, 0, 
+	45, 108, 35, 37, 84, 37, 87, 0, 
+	37, 90, 31, 33, 75, 33, 78, 0, 
+	33, 81, 3, 5, 51, 5, 54, 0, 
+	5, 57, 39, 41, 93, 41, 96, 0, 
+	41, 99, 23, 25, 69, 0, 0, 15, 
+	17, 0, 17, 0, 0, 19, 66, 19, 
+	0, 21, 0, 49, 21, 0, 0, 15, 
+	15, 15, 0, 0, 0, 17, 63, 111, 
+	63, 0, 19, 66, 19, 0, 21, 0, 
+	49, 21, 0, 0, 0, 15, 17, 0, 
 	17, 0, 0
 ]
 
@@ -271,7 +274,7 @@ end
 self.rhaml_parser_en_main = 44;
 
 
-# line 275 "lib/rhaml/parser.rb"
+# line 278 "lib/rhaml/parser.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -279,7 +282,7 @@ begin
 	top = 0
 end
 
-# line 283 "lib/rhaml/parser.rb"
+# line 286 "lib/rhaml/parser.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -453,6 +456,10 @@ when 22 then
 		begin
  __call(:on_finish_id_div, data, p == eof ? p : p-1) 		end
 when 23 then
+# line 50 "lib/rhaml/parser.rl"
+		begin
+ __call(:on_newline, data, p) 		end
+when 24 then
 # line 31 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -464,7 +471,7 @@ when 23 then
 		break
 	end
  		end
-when 24 then
+when 25 then
 # line 32 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -476,7 +483,7 @@ when 24 then
 		break
 	end
  		end
-when 25 then
+when 26 then
 # line 33 "lib/rhaml/parser_common.rl"
 		begin
  	begin
@@ -487,7 +494,7 @@ when 25 then
 		break
 	end
  		end
-# line 491 "lib/rhaml/parser.rb"
+# line 498 "lib/rhaml/parser.rb"
 			end # action switch
 		end
 	end
@@ -547,7 +554,7 @@ when 22 then
 # line 48 "lib/rhaml/parser.rl"
 		begin
  __call(:on_finish_id_div, data, p == eof ? p : p-1) 		end
-# line 551 "lib/rhaml/parser.rb"
+# line 558 "lib/rhaml/parser.rb"
 		end # eof action switch
 	end
 	if _trigger_goto
@@ -561,7 +568,7 @@ end
 	end
 	end
 
-# line 80 "lib/rhaml/parser.rl"
+# line 82 "lib/rhaml/parser.rl"
 
       
       if cs == rhaml_parser_error
