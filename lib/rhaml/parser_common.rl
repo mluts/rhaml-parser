@@ -98,14 +98,13 @@
   filter =
     ":" alnum+ >start_filter %/finish_filter %finish_filter ;
 
-  element = header | tag | div | filter;
+  text = ^(indent | ":" | "!" | "%" | "." | "#" ) >start_text nonl+ %/finish_text %finish_text;
 
   inline_text = wp nonl+>start_inline_text %/finish_inline_text %finish_inline_text ;
 
-  text = ^(space | ":" | "!" | "%" | "." | "#" ) >start_text nonl+ %/finish_text %finish_text;
+  element = ((header | tag | div | filter) inline_text?) | text ;
 
-  line =
-    indent* ((element inline_text?) | text) nl ;
+  line = indent* element nl ;
 
   main := line*;
 }%%
