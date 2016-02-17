@@ -140,7 +140,8 @@ class ParserTest < Minitest::Test
     "%a.b.c#d#e" => [[:tag, "a"], [:class, "b"], [:class, "c"], [:id, "d"], [:id, "e"]],
     ".a#b" => [[:class_div, 'a'], [:id ,'b']],
     ".a#b(a=b)" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b']],
-    ".a#b(a=b) abcde" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b'], [:inline_text, 'abcde']]
+    ".a#b(a=b) abcde" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b'], [:inline_text, 'abcde']],
+    '%div{ "a" => "b" }' => [[:tag, 'div'], [:attr, '"a"', '"b"']]
 
 
   }.each do |example, result|

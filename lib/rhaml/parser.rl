@@ -93,6 +93,7 @@ module RHaml
     end
 
     def __call(mtd, input, p)
+      puts "#{mtd.inspect} #{p.inspect}" if $-d
       if @callable.respond_to?(mtd)
         @callable.send(mtd, input, p)
       else

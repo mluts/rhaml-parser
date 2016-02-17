@@ -50,7 +50,7 @@
   ruby_attr_name = 
     (":" ruby_var_name >start_attr_name %finish_attr_name space* "=>") |
     (ruby_var_name >start_attr_name %finish_attr_name ":") |
-    quoted >start_attr_name %finish_attr_name ;
+    (quoted >start_attr_name %finish_attr_name space* "=>") ;
 
   ruby_attr =
     space*
