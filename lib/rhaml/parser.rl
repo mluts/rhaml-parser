@@ -47,6 +47,8 @@
 
   action finish_id_div { __call(:on_finish_id_div, data, fpc == eof ? fpc : fpc-1) }
 
+  action element_slash { __call(:on_element_slash, data, fpc) }
+
   action newline { __call(:on_newline, data, fpc) }
 
   include rhaml_common "parser_common.rl";

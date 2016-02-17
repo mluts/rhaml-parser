@@ -85,7 +85,7 @@
                 %finish_id_div;
 
   div =
-    (class_div | id_div) class_or_id* attrs?;
+    (class_div | id_div) class_or_id* attrs? ;
 
   tag =
     "%" tag_name >start_tag
@@ -93,6 +93,7 @@
                  %finish_tag
     (class_or_id)*
     attrs?
+    ("/" >element_slash)?
     ;
 
   filter =

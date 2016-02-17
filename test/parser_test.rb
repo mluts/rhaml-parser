@@ -96,7 +96,9 @@ class ParserTest < Minitest::Test
 
       on_space_indent: proc { $output << [:space] },
 
-      on_newline: proc { $output << [:newline] }
+      on_newline: proc { $output << [:newline] },
+
+      on_element_slash: proc { $output << [:autoindent] }
 
     }.each do |mtd, impl|
       callable.singleton_class.send(:define_method, mtd) do |*args|
@@ -141,7 +143,8 @@ class ParserTest < Minitest::Test
     ".a#b" => [[:class_div, 'a'], [:id ,'b']],
     ".a#b(a=b)" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b']],
     ".a#b(a=b) abcde" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b'], [:inline_text, 'abcde']],
-    '%div{ "a" => "b" }' => [[:tag, 'div'], [:attr, '"a"', '"b"']]
+    '%div{ "a" => "b" }' => [[:tag, 'div'], [:attr, '"a"', '"b"']],
+    "%a/" => [[:tag, 'a'], [:autoindent]]
 
 
   }.each do |example, result|
