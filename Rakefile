@@ -3,14 +3,19 @@ require 'rake/testtask'
 require 'bundler/gem_tasks'
 
 RAGEL = 'ragel -R'
-CLEAN << FileList['lib/rhaml/parser.rb', 'parser.dot', 'parser.png']
+CLEAN << FileList['lib/rhaml/parser.rb', 'parser.dot', 'parser.png'].select { |f| File.exists?(f) }
 
 file 'lib/rhaml/parser.rb' => %w(lib/rhaml/parser.rl lib/rhaml/parser_common.rl) do |t|
   sh "#{RAGEL} -o #{t.name} #{t.prerequisites.first}"
 end
 
-file 'parser.dot' => %w(lib/rhaml/parser.rl lib/rhaml/parser_common.rl) do |t|
-  sh "#{RAGEL} -V -o #{t.name} #{t.prerequisites.first}"
+task 'parser.dot' => %w(lib/rhaml/parser.rl lib/rhaml/parser_common.rl) do |t|
+  cmd = [RAGEL]
+  cmd.push '-V', '-p'
+  cmd.push '-o', t.name
+  cmd.push '-M', ENV['MACHINE'] if ENV['MACHINE']
+  cmd.push t.prerequisites.first
+  sh cmd.join(' ')
 end
 
 file 'parser.png' => 'parser.dot' do |t|
@@ -26,9 +31,7 @@ end
 task compile: %w(lib/rhaml/parser.rb)
 
 task draw: %w(parser.png) do |t|
-  fork do
-    exec "feh #{t.prerequisites.first}"
-  end
+  sh "feh #{t.prerequisites.first} &"
 end
 
 task default: [:compile, :test]
