@@ -21,7 +21,7 @@
 
   action start_attr_val { __call(:on_start_attr_val, data, fpc) }
 
-  action finish_attr_val { __call(:on_finish_attr_val, data, fpc) }
+  action finish_attr_val { __call(:on_finish_attr_val, data, fpc-1) }
 
   action start_filter { __call(:on_start_filter, data, fpc) }
 
@@ -95,7 +95,7 @@ module RHaml
     end
 
     def __call(mtd, input, p)
-      puts "#{mtd.inspect} #{p.inspect}" if $-d
+      puts "#{mtd.inspect} #{p.inspect} #{input[p].inspect}" if $-d
       if @callable.respond_to?(mtd)
         @callable.send(mtd, input, p)
       else

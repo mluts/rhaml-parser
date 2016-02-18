@@ -102,7 +102,6 @@ class ParserTest < Minitest::Test
 
     }.each do |mtd, impl|
       callable.singleton_class.send(:define_method, mtd) do |*args|
-        puts mtd.inspect + " " + args[0][args[1]].inspect if $-d
         impl.call(*args)
       end
     end
@@ -144,7 +143,10 @@ class ParserTest < Minitest::Test
     ".a#b(a=b)" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b']],
     ".a#b(a=b) abcde" => [[:class_div, 'a'], [:id ,'b'], [:attr, 'a', 'b'], [:inline_text, 'abcde']],
     '%div{ "a" => "b" }' => [[:tag, 'div'], [:attr, '"a"', '"b"']],
-    "%a/" => [[:tag, 'a'], [:autoindent]]
+    "%a/" => [[:tag, 'a'], [:autoindent]],
+    '%a(checked=checked)' => [[:tag, 'a'], [:attr, 'checked', 'checked']],
+    '%a{ "checked"  => "checked" }' => [[:tag, 'a'], [:attr, '"checked"', '"checked"']],
+    "%a(aa=aa bb=bb)" => [[:tag, 'a'], [:attr, 'aa', 'aa'], [:attr, 'bb', 'bb']]
 
 
   }.each do |example, result|

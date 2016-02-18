@@ -42,7 +42,7 @@ self._rhaml_parser_actions = [
 	19, 1, 20, 1, 21, 1, 22, 1, 
 	23, 1, 24, 1, 27, 2, 2, 23, 
 	2, 2, 24, 2, 2, 25, 2, 2, 
-	26, 2, 4, 24, 2, 9, 10, 2, 
+	26, 2, 4, 24, 2, 10, 27, 2, 
 	12, 24, 2, 14, 24, 2, 16, 23, 
 	2, 16, 24, 2, 16, 25, 2, 16, 
 	26, 2, 18, 23, 2, 18, 24, 2, 
@@ -61,8 +61,8 @@ self._rhaml_parser_key_offsets = [
 	97, 113, 121, 137, 142, 150, 166, 174, 
 	190, 196, 206, 217, 229, 233, 244, 245, 
 	249, 261, 273, 274, 286, 287, 291, 295, 
-	296, 307, 308, 313, 326, 327, 336, 337, 
-	343, 355, 362, 362
+	296, 307, 308, 313, 318, 331, 332, 341, 
+	342, 348, 360, 367, 367
 ]
 
 class << self
@@ -109,13 +109,13 @@ self._rhaml_parser_trans_keys = [
 	61, 9, 13, 32, 61, 9, 13, 62, 
 	32, 34, 36, 39, 95, 9, 13, 65, 
 	90, 97, 122, 34, 32, 44, 125, 9, 
-	13, 32, 36, 44, 95, 125, 9, 13, 
-	48, 57, 65, 90, 97, 122, 39, 36, 
-	58, 95, 48, 57, 65, 90, 97, 122, 
-	39, 36, 95, 65, 90, 97, 122, 32, 
-	36, 61, 95, 9, 13, 48, 57, 65, 
-	90, 97, 122, 9, 32, 33, 35, 37, 
-	46, 58, 0
+	13, 32, 44, 125, 9, 13, 32, 36, 
+	44, 95, 125, 9, 13, 48, 57, 65, 
+	90, 97, 122, 39, 36, 58, 95, 48, 
+	57, 65, 90, 97, 122, 39, 36, 95, 
+	65, 90, 97, 122, 32, 36, 61, 95, 
+	9, 13, 48, 57, 65, 90, 97, 122, 
+	9, 32, 33, 35, 37, 46, 58, 0
 ]
 
 class << self
@@ -128,8 +128,8 @@ self._rhaml_parser_single_lengths = [
 	8, 2, 8, 3, 2, 8, 2, 8, 
 	0, 2, 3, 4, 2, 5, 1, 2, 
 	4, 4, 1, 6, 1, 2, 2, 1, 
-	5, 1, 3, 5, 1, 3, 1, 2, 
-	4, 7, 0, 0
+	5, 1, 3, 3, 5, 1, 3, 1, 
+	2, 4, 7, 0, 0
 ]
 
 class << self
@@ -142,8 +142,8 @@ self._rhaml_parser_range_lengths = [
 	4, 3, 4, 1, 3, 4, 3, 4, 
 	3, 4, 4, 4, 1, 3, 0, 1, 
 	4, 4, 0, 3, 0, 1, 1, 0, 
-	3, 0, 1, 4, 0, 3, 0, 2, 
-	4, 0, 0, 0
+	3, 0, 1, 1, 4, 0, 3, 0, 
+	2, 4, 0, 0, 0
 ]
 
 class << self
@@ -156,8 +156,8 @@ self._rhaml_parser_index_offsets = [
 	87, 100, 106, 119, 124, 130, 143, 149, 
 	162, 166, 173, 181, 190, 194, 203, 205, 
 	209, 218, 227, 229, 239, 241, 245, 249, 
-	251, 260, 262, 267, 277, 279, 286, 288, 
-	293, 302, 310, 311
+	251, 260, 262, 267, 272, 282, 284, 291, 
+	293, 298, 307, 315, 316
 ]
 
 class << self
@@ -191,20 +191,20 @@ self._rhaml_parser_indicies = [
 	81, 80, 81, 81, 81, 1, 83, 84, 
 	83, 1, 84, 85, 86, 87, 86, 84, 
 	86, 86, 1, 89, 88, 90, 91, 90, 
-	1, 90, 91, 79, 79, 90, 79, 79, 
-	79, 1, 90, 92, 91, 92, 90, 92, 
-	92, 92, 1, 89, 93, 94, 95, 96, 
-	97, 98, 96, 94, 96, 96, 1, 100, 
-	99, 101, 102, 101, 1, 103, 104, 103, 
-	1, 105, 1, 105, 106, 107, 108, 107, 
-	105, 107, 107, 1, 110, 109, 111, 94, 
-	112, 111, 1, 111, 113, 94, 113, 112, 
-	111, 113, 113, 113, 1, 110, 114, 115, 
-	116, 115, 115, 115, 115, 1, 100, 117, 
-	118, 118, 118, 118, 1, 101, 119, 102, 
-	119, 101, 119, 119, 119, 1, 4, 5, 
-	6, 7, 8, 9, 10, 3, 1, 1, 
-	0
+	1, 92, 93, 79, 79, 92, 79, 79, 
+	79, 1, 90, 94, 91, 94, 90, 94, 
+	94, 94, 1, 89, 95, 96, 97, 98, 
+	99, 100, 98, 96, 98, 98, 1, 102, 
+	101, 103, 104, 103, 1, 105, 106, 105, 
+	1, 107, 1, 107, 108, 109, 110, 109, 
+	107, 109, 109, 1, 112, 111, 113, 114, 
+	115, 113, 1, 116, 96, 117, 116, 1, 
+	113, 118, 114, 118, 115, 113, 118, 118, 
+	118, 1, 112, 119, 120, 121, 120, 120, 
+	120, 120, 1, 102, 122, 123, 123, 123, 
+	123, 1, 103, 124, 104, 124, 103, 124, 
+	124, 124, 1, 4, 5, 6, 7, 8, 
+	9, 10, 3, 1, 1, 0
 ]
 
 class << self
@@ -212,21 +212,22 @@ class << self
 	private :_rhaml_parser_trans_targs, :_rhaml_parser_trans_targs=
 end
 self._rhaml_parser_trans_targs = [
-	2, 0, 49, 1, 3, 3, 4, 9, 
-	15, 22, 24, 5, 6, 7, 49, 8, 
-	8, 49, 10, 7, 49, 11, 6, 10, 
-	13, 6, 12, 7, 49, 11, 6, 12, 
-	13, 6, 14, 7, 49, 11, 6, 14, 
-	13, 6, 16, 7, 49, 17, 19, 16, 
+	2, 0, 50, 1, 3, 3, 4, 9, 
+	15, 22, 24, 5, 6, 7, 50, 8, 
+	8, 50, 10, 7, 50, 11, 6, 10, 
+	13, 6, 12, 7, 50, 11, 6, 12, 
+	13, 6, 14, 7, 50, 11, 6, 14, 
+	13, 6, 16, 7, 50, 17, 19, 16, 
 	20, 6, 19, 18, 17, 19, 18, 20, 
 	6, 19, 6, 21, 17, 19, 21, 20, 
-	6, 19, 23, 7, 49, 11, 6, 23, 
-	13, 6, 25, 7, 49, 25, 26, 27, 
+	6, 19, 23, 7, 50, 11, 6, 23, 
+	13, 6, 25, 7, 50, 25, 26, 27, 
 	28, 27, 29, 28, 29, 30, 33, 34, 
-	30, 31, 32, 50, 33, 34, 35, 36, 
-	45, 46, 47, 36, 37, 38, 39, 38, 
-	39, 40, 41, 43, 44, 41, 42, 42, 
-	51, 43, 44, 45, 40, 46, 48, 48
+	30, 31, 32, 51, 32, 51, 33, 34, 
+	35, 36, 46, 47, 48, 36, 37, 38, 
+	39, 38, 39, 40, 41, 44, 45, 41, 
+	42, 43, 35, 52, 43, 52, 44, 45, 
+	46, 40, 47, 49, 49
 ]
 
 class << self
@@ -244,11 +245,12 @@ self._rhaml_parser_trans_actions = [
 	89, 98, 47, 31, 33, 83, 0, 33, 
 	77, 86, 39, 41, 101, 41, 104, 0, 
 	41, 107, 23, 25, 71, 0, 0, 15, 
-	17, 0, 17, 0, 0, 19, 68, 19, 
-	0, 21, 0, 51, 21, 0, 0, 15, 
-	15, 15, 0, 0, 0, 17, 17, 0, 
-	0, 0, 19, 68, 19, 0, 21, 0, 
-	51, 21, 0, 0, 17, 0, 15, 0
+	17, 0, 17, 0, 0, 19, 19, 19, 
+	0, 0, 21, 68, 0, 51, 0, 0, 
+	0, 15, 15, 15, 0, 0, 0, 17, 
+	17, 0, 0, 0, 19, 19, 19, 0, 
+	0, 21, 21, 68, 0, 51, 0, 0, 
+	0, 17, 0, 15, 0
 ]
 
 class << self
@@ -262,17 +264,17 @@ self._rhaml_parser_eof_actions = [
 	0, 25, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0
+	0, 0, 0, 0, 0
 ]
 
 class << self
 	attr_accessor :rhaml_parser_start
 end
-self.rhaml_parser_start = 49;
+self.rhaml_parser_start = 50;
 class << self
 	attr_accessor :rhaml_parser_first_final
 end
-self.rhaml_parser_first_final = 49;
+self.rhaml_parser_first_final = 50;
 class << self
 	attr_accessor :rhaml_parser_error
 end
@@ -289,10 +291,10 @@ self.rhaml_parser_en_ruby_attrs = 35;
 class << self
 	attr_accessor :rhaml_parser_en_main
 end
-self.rhaml_parser_en_main = 49;
+self.rhaml_parser_en_main = 50;
 
 
-# line 296 "lib/rhaml/parser.rb"
+# line 298 "lib/rhaml/parser.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -300,7 +302,7 @@ begin
 	top = 0
 end
 
-# line 304 "lib/rhaml/parser.rb"
+# line 306 "lib/rhaml/parser.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -424,7 +426,7 @@ when 9 then
 when 10 then
 # line 24 "lib/rhaml/parser.rl"
 		begin
- __call(:on_finish_attr_val, data, p) 		end
+ __call(:on_finish_attr_val, data, p-1) 		end
 when 11 then
 # line 26 "lib/rhaml/parser.rl"
 		begin
@@ -482,7 +484,7 @@ when 24 then
 		begin
  __call(:on_newline, data, p) 		end
 when 25 then
-# line 31 "lib/rhaml/parser_common.rl"
+# line 4 "lib/rhaml/parser_common.rl"
 		begin
  	begin
 		stack[top] = cs
@@ -494,7 +496,7 @@ when 25 then
 	end
  		end
 when 26 then
-# line 32 "lib/rhaml/parser_common.rl"
+# line 5 "lib/rhaml/parser_common.rl"
 		begin
  	begin
 		stack[top] = cs
@@ -506,7 +508,7 @@ when 26 then
 	end
  		end
 when 27 then
-# line 33 "lib/rhaml/parser_common.rl"
+# line 6 "lib/rhaml/parser_common.rl"
 		begin
  	begin
 		top -= 1
@@ -516,7 +518,7 @@ when 27 then
 		break
 	end
  		end
-# line 520 "lib/rhaml/parser.rb"
+# line 522 "lib/rhaml/parser.rb"
 			end # action switch
 		end
 	end
@@ -576,7 +578,7 @@ when 22 then
 # line 48 "lib/rhaml/parser.rl"
 		begin
  __call(:on_finish_id_div, data, p == eof ? p : p-1) 		end
-# line 580 "lib/rhaml/parser.rb"
+# line 582 "lib/rhaml/parser.rb"
 		end # eof action switch
 	end
 	if _trigger_goto
@@ -605,7 +607,7 @@ end
     end
 
     def __call(mtd, input, p)
-      puts "#{mtd.inspect} #{p.inspect}" if $-d
+      puts "#{mtd.inspect} #{p.inspect} #{input[p].inspect}" if $-d
       if @callable.respond_to?(mtd)
         @callable.send(mtd, input, p)
       else

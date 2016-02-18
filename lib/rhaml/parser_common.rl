@@ -1,6 +1,10 @@
 %%{
   machine rhaml_common;
 
+  action call_html_attrs { fcall html_attrs; }
+  action call_ruby_attrs { fcall ruby_attrs; }
+  action ret { fret; }
+
   nl = [\n];
   wp = space -- nl;
   rwp = wp+ ;
@@ -11,36 +15,31 @@
   spi = " " $space_indent;
   indent = tabi | spi;
 
-  header = "!!!" >new_header ;
-
   name = (alnum | ":" | "-" | "_")+ ;
-
-  attr_name = name;
-
-  tag_name = name;
 
   squoted = "'" ((any -- "'") | "\'")* :>> "'" ;
   dquoted = '"' ((any -- '"') | '\"')* :>> '"' ;
-
   quoted = squoted | dquoted;
 
   var = (alpha | "_" | "$") (alnum | "_" | "$")*;
 
-  attr_val = var | quoted;
+  header = "!!!" >new_header ;
 
-  action call_html_attrs { fcall html_attrs; }
-  action call_ruby_attrs { fcall ruby_attrs; }
-  action ret { fret; }
+  attr_val =
+    var >start_attr_val %finish_attr_val |
+    squoted >start_attr_val %finish_attr_val |
+    dquoted >start_attr_val %finish_attr_val
+    ;
+
+  html_attr_name = name >start_attr_name %finish_attr_name;
 
   html_attr =
     space*
-    attr_name >start_attr_name
-              %finish_attr_name
+    html_attr_name
     space*
     "="
     space*
-    attr_val >start_attr_val
-             @finish_attr_val
+    attr_val
     ;
 
   html_attrs := html_attr (space+ html_attr)* space* ")" $ret;
@@ -56,31 +55,31 @@
     space*
     ruby_attr_name
     space*
-    attr_val >start_attr_val @finish_attr_val ;
+    attr_val ;
 
   ruby_attrs := ruby_attr (space* "," space* ruby_attr)* space* "}" $ret;
 
   attrs = "(" $call_html_attrs | "{" $call_ruby_attrs ;
 
   class =
-    "." tag_name
+    "." name
       >start_class
       %/finish_class
       %finish_class ;
 
   id =
-    "#" tag_name >start_id %/finish_id %finish_id;
+    "#" name >start_id %/finish_id %finish_id;
 
   class_or_id = class | id;
 
   class_div =
-    "." tag_name
+    "." name
       >start_class_div
       %/finish_class_div
       %finish_class_div ;
 
   id_div = 
-    "#" tag_name >start_id_div
+    "#" name >start_id_div
                 %/finish_id_div
                 %finish_id_div;
 
@@ -88,7 +87,7 @@
     (class_div | id_div) class_or_id* attrs? ;
 
   tag =
-    "%" tag_name >start_tag
+    "%" name >start_tag
                  %/finish_tag
                  %finish_tag
     (class_or_id)*
