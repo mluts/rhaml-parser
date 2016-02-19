@@ -98,7 +98,11 @@ class ParserTest < Minitest::Test
 
       on_newline: proc { $output << [:newline] },
 
-      on_element_slash: proc { $output << [:autoindent] }
+      on_element_slash: proc { $output << [:autoindent] },
+
+      on_start_comment: proc { |input, p| $output << [:comment, p] },
+
+      on_finish_comment: proc { |input, p| $output.last[1] = input[$output.last[1]..p] }
 
     }.each do |mtd, impl|
       callable.singleton_class.send(:define_method, mtd) do |*args|
@@ -146,7 +150,9 @@ class ParserTest < Minitest::Test
     "%a/" => [[:tag, 'a'], [:autoindent]],
     '%a(checked=checked)' => [[:tag, 'a'], [:attr, 'checked', 'checked']],
     '%a{ "checked"  => "checked" }' => [[:tag, 'a'], [:attr, '"checked"', '"checked"']],
-    "%a(aa=aa bb=bb)" => [[:tag, 'a'], [:attr, 'aa', 'aa'], [:attr, 'bb', 'bb']]
+    "%a(aa=aa bb=bb)" => [[:tag, 'a'], [:attr, 'aa', 'aa'], [:attr, 'bb', 'bb']],
+    '/ comment' => [[:comment, 'comment']],
+    "%a\n  / comment" => [[:tag, 'a'], [:newline], [:space], [:space], [:comment, 'comment']]
 
 
   }.each do |example, result|
