@@ -51,9 +51,7 @@
 
   action newline { __call(:on_newline, data, fpc) }
 
-  action start_comment { __call(:on_start_comment, data, fpc) }
-
-  action finish_comment { __call(:on_finish_comment, data, fpc-1) }
+  action comment { __call(:on_comment, data, fpc) }
 
   include rhaml_common "parser_common.rl";
 }%%

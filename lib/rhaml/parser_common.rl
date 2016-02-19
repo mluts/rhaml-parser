@@ -101,7 +101,7 @@
     ":" alnum+ >start_filter %/finish_filter %finish_filter ;
 
   comment =
-    "/" (space+ nonl* >start_comment %/finish_comment %finish_comment);
+    "/" >comment ;
 
   text = ^(indent | ":" | "!" | "%" | "." | "#" | "/") >start_text nonl+ %/finish_text %finish_text;
 
