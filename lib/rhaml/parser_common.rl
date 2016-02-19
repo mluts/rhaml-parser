@@ -36,10 +36,12 @@
   html_attr =
     space*
     html_attr_name
-    space*
-    "="
-    space*
-    attr_val
+    (
+     space*
+     "="
+     space*
+     attr_val
+    )?
     ;
 
   html_attrs := html_attr (space+ html_attr)* space* ")" $ret;

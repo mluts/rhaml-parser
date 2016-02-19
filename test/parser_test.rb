@@ -152,7 +152,8 @@ class ParserTest < Minitest::Test
     '%a{ "checked"  => "checked" }' => [[:tag, 'a'], [:attr, '"checked"', '"checked"']],
     "%a(aa=aa bb=bb)" => [[:tag, 'a'], [:attr, 'aa', 'aa'], [:attr, 'bb', 'bb']],
     '/ comment' => [[:comment, 'comment']],
-    "%a\n  / comment" => [[:tag, 'a'], [:newline], [:space], [:space], [:comment, 'comment']]
+    "%a\n  / comment" => [[:tag, 'a'], [:newline], [:space], [:space], [:comment, 'comment']],
+    '%a(b)' => [[:tag, 'a'], [:attr, 'b']]
 
 
   }.each do |example, result|
