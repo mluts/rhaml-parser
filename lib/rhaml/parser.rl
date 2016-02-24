@@ -53,6 +53,18 @@
 
   action comment { __call(:on_comment, data, fpc) }
 
+  action silent_code { __call(:on_silent_code, data, fpc) }
+
+  action if_cond { __call(:on_if_cond, data, fpc) }
+
+  action unless_cond { __call(:on_unless_cond, data, fpc) }
+
+  action elsif_cond { __call(:on_elsif_cond, data, fpc) }
+
+  action else_cond { __call(:on_else_cond, data, fpc) }
+
+  action end_st { __call(:on_end_st, data, fpc) }
+
   include rhaml_common "parser_common.rl";
 }%%
 

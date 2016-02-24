@@ -103,11 +103,23 @@
   comment =
     "/" >comment ;
 
-  text = ^(indent | ":" | "!" | "%" | "." | "#" | "/") >start_text nonl+ %/finish_text %finish_text;
+  silent_code =
+    "-" >silent_code
+      ( wp* (
+              "if" %if_cond |
+              "unless" %unless_cond |
+              "elsif" %elsif_cond |
+              "else" %else_cond |
+              "end" %end_st
+            )
+      )?
+    ;
+
+  text = ^(indent | ":" | "!" | "%" | "." | "#" | "/" | "-") >start_text nonl+ %/finish_text %finish_text;
 
   inline_text = wp nonl+>start_inline_text %/finish_inline_text %finish_inline_text ;
 
-  element = ((header | tag | div | filter | comment) inline_text?) | text ;
+  element = ((header | tag | div | filter | comment | silent_code ) inline_text?) | text ;
 
   line = indent* element nl>newline ;
 

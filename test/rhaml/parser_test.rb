@@ -100,7 +100,11 @@ class ParserTest < Minitest::Test
 
       on_element_slash: proc { $output << [:autoindent] },
 
-      on_comment: proc { $output << [:comment] }
+      on_comment: proc { $output << [:comment] },
+
+      on_silent_code: proc { |input, p|
+        $output << [:silent]
+      },
 
     }.each do |mtd, impl|
       callable.singleton_class.send(:define_method, mtd) do |*args|
@@ -151,7 +155,8 @@ class ParserTest < Minitest::Test
     "%a(aa=aa bb=bb)" => [[:tag, 'a'], [:attr, 'aa', 'aa'], [:attr, 'bb', 'bb']],
     '/ comment' => [[:comment], [:inline_text, 'comment']],
     "%a\n  / comment" => [[:tag, 'a'], [:newline], [:space], [:space], [:comment], [:inline_text, 'comment']],
-    '%a(b)' => [[:tag, 'a'], [:attr, 'b']]
+    '%a(b)' => [[:tag, 'a'], [:attr, 'b']],
+    '- abc #' => [[:silent], [:inline_text, 'abc #']]
 
 
   }.each do |example, result|
